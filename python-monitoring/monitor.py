@@ -1,4 +1,4 @@
-import mysql.connector
+import mariadb  # Menggunakan mariadb sebagai konektor
 import logging
 import time
 
@@ -11,24 +11,24 @@ logging.basicConfig(
 
 # Konfigurasi koneksi ke database
 config = {
-        'user': 'dp4kb_user',
-        'password': 'Bocahkreative89',
-        'host': '103.86.138.65',  # IP VPS
-        'database': 'monitoring_db',
-        'port': 3306  # Port default untuk MySQL/MariaDB
-    }
+    'user': 'dp4kb_user',
+    'password': 'Bocahkreative89',
+    'host': '103.86.138.65',  # IP VPS
+    'database': 'rkm',
+    'port': 3306  # Port default untuk MySQL/MariaDB
+}
 
 def monitor_database():
     try:
         logging.info("Mencoba menghubungkan ke database...")
-        # Membuat koneksi ke database
-        connection = mysql.connector.connect(**config)
+        # Membuat koneksi ke database menggunakan MariaDB connector
+        connection = mariadb.connect(**config)
         cursor = connection.cursor()
         logging.info("Koneksi berhasil!")
 
         # Menjalankan query untuk mendeteksi perubahan
         logging.info("Menjalankan query untuk memeriksa perubahan...")
-        cursor.execute("SELECT * FROM log_table WHERE change_time > NOW() ORDER BY change_time ASC")
+        cursor.execute("SELECT * FROM keluarga WHERE created_at > NOW() - INTERVAL 1 HOUR ORDER BY updated_at DESC")
         logging.info("Query dijalankan!")
 
         # Ambil data terakhir
@@ -42,7 +42,7 @@ def monitor_database():
         cursor.close()
         connection.close()
         logging.info("Koneksi ditutup.")
-    except mysql.connector.Error as err:
+    except mariadb.Error as err:
         logging.error(f"Terjadi kesalahan pada koneksi database: {err}")
     except Exception as e:
         logging.error(f"Terjadi kesalahan tak terduga: {e}")
