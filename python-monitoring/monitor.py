@@ -28,7 +28,7 @@ def monitor_database():
 
         # Menjalankan query untuk mendeteksi perubahan
         logging.info("Menjalankan query untuk memeriksa perubahan...")
-        cursor.execute("SELECT * FROM keluarga WHERE created_at > NOW() - INTERVAL 1 HOUR ORDER BY updated_at DESC")
+        cursor.execute("SELECT * FROM keluarga WHERE updated_at > NOW() - INTERVAL 24 HOUR ORDER BY updated_at DESC;")
         logging.info("Query dijalankan!")
 
         # Ambil data terakhir
