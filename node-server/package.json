@@ -1,0 +1,15 @@
+{
+    "name": "node-server",
+    "version": "1.0.0",
+    "description": "Real-time database monitoring server",
+    "main": "server.js",
+    "dependencies": {
+      "express": "^4.18.2",
+      "mysql": "^2.18.1",
+      "ws": "^8.13.0"
+    },
+    "scripts": {
+      "start": "node server.js"
+    }
+  }
+  
